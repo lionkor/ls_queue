@@ -2,7 +2,7 @@
 
 /* Lion's Standard (LS) type-safe ANSI C queue.
  *
- * Version: 2.0
+ * Version: 2.1
  * Repo: https://github.com/lionkor/ls_queue
  * SPDX-License-Identifier: MIT
  *
@@ -101,7 +101,7 @@
         size_t read;                                                           \
         size_t write;                                                          \
     } name;                                                                    \
-    _ls_QUEUE_IMPL_DETAIL(T, name, cap, static inline)
+    _ls_QUEUE_IMPL_DETAIL(T, name, cap, static)
 
 #define LS_QUEUE_IMPL(T, name, cap)                                       \
     _ls_QUEUE_IMPL_DETAIL(T, name, cap, )
