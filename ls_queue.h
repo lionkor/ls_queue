@@ -2,7 +2,7 @@
 
 /* Lion's Standard (LS) type-safe ANSI C queue.
  *
- * Version: 1.0
+ * Version: 2.0
  * Repo: https://github.com/lionkor/ls_queue
  * SPDX-License-Identifier: MIT
  *
@@ -34,7 +34,7 @@
  *
  * Simple example:
  *
- *     LS_QUEUE_TYPE_INLINE(int, int_queue, 32)
+ *     LS_QUEUE_INLINE(int, int_queue, 32)
  *
  *     // somewhere in the same file
  *     int_queue q;
@@ -48,10 +48,10 @@
  * Alternative example with decl and inline split:
  *
  *     // In your header file:
- *     LS_QUEUE_CAP_DECL(int, int_queue, 32)
+ *     LS_QUEUE_DECL(int, int_queue, 32)
  *
  *     // In one source file:
- *     LS_QUEUE_CAP_IMPL(int, int_queue, 32)
+ *     LS_QUEUE_IMPL(int, int_queue, 32)
  *
  *     // Usage in your code:
  *     int_queue q;
@@ -95,18 +95,18 @@
 #include <assert.h>
 #include <stddef.h>
 
-#define LS_QUEUE_TYPE_INLINE(T, name, cap)                                     \
+#define LS_QUEUE_INLINE(T, name, cap)                                     \
     typedef struct name##_##cap {                                              \
         T data[(cap) + 1];                                                     \
         size_t read;                                                           \
         size_t write;                                                          \
     } name;                                                                    \
-    _ls_QUEUE_TYPE_IMPL_DETAIL(T, name, cap, static inline)
+    _ls_QUEUE_IMPL_DETAIL(T, name, cap, static inline)
 
-#define LS_QUEUE_TYPE_IMPL(T, name, cap)                                       \
-    _ls_QUEUE_TYPE_IMPL_DETAIL(T, name, cap, )
+#define LS_QUEUE_IMPL(T, name, cap)                                       \
+    _ls_QUEUE_IMPL_DETAIL(T, name, cap, )
 
-#define LS_QUEUE_TYPE_DECL(T, name, cap)                                       \
+#define LS_QUEUE_DECL(T, name, cap)                                       \
     typedef struct name##_##cap {                                              \
         T data[(cap) + 1];                                                     \
         size_t read;                                                           \
@@ -118,8 +118,8 @@
     /* Returns 0 if empty, 1 if successful. */                                 \
     int name##_pop(name* q, T* out);
 
-/* DO NOT USE THE MACRO BELOW. Use LS_QUEUE_TYPE_INLINE or
- * LS_QUEUE_TYPE_{IMPL,DECL} instead.
+/* DO NOT USE THE MACRO BELOW. Use LS_QUEUE_INLINE or
+ * LS_QUEUE_{IMPL,DECL} instead.
  *
  * What follows are some ramblings about the implementation.
  *
@@ -141,7 +141,7 @@
  * so the typedefs exist, and the functions are named without the size
  * specifier, too.
  */
-#define _ls_QUEUE_TYPE_IMPL_DETAIL(T, name, cap, specifier)                    \
+#define _ls_QUEUE_IMPL_DETAIL(T, name, cap, specifier)                    \
     specifier void name##_init(struct name##_##cap* q) {                       \
         assert(q != NULL);                                                     \
         q->read = 0;                                                           \

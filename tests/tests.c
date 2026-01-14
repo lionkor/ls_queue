@@ -3,7 +3,7 @@
 
 #include "ls_queue.h"
 
-LS_QUEUE_TYPE_INLINE(int, int_queue, 4)
+LS_QUEUE_INLINE(int, int_queue, 4)
 
 TEST_CASE(queue_init) {
     int_queue q;
