@@ -1,3 +1,4 @@
 tests/tests
 .cache/
-queue.o
+ls_queue.o
+compile_commands.json
