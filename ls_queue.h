@@ -1,5 +1,3 @@
-#pragma once
-
 /* Lion's Standard (LS) type-safe ANSI C queue.
  *
  * Version: 2.1
@@ -92,6 +90,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#pragma once
 
 #include <assert.h>
 #include <stddef.h>
